@@ -30,6 +30,12 @@ test {
 }
 test.finalizedBy jacocoTestReport
 jacocoTestReport {
+	afterEvaluate {
+		getClassDirectories().setFrom(classDirectories.files.collect {
+			// excluding the "SpringBootApplication" class since there's no custom code
+			fileTree(dir: it, exclude: ['**/Application.*'])
+		})
+	}
 	reports {
 		xml.enabled true
 		html.enabled true
